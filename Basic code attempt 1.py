@@ -1,7 +1,7 @@
+# PCA code for analysing the health of turbomachines
 import pandas as pd
 import numpy as np
 import random as rd
-
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
@@ -66,11 +66,6 @@ plt.ylabel('Percentage of Explained Variance')
 plt.xlabel('Principal Component')
 plt.title('Scree Plot')
 plt.show()
-pca_df = pd.DataFrame(pca_data, index=[*ao, *bo, *co, *do, *eo, *fo, *go, *ho, *io, *jo, *ko, *lo, *mo, *no, *po, *qo, *ro, *so, *to, *uo, *vo], columns=labels)
-plt.scatter(pca_df.PC1, pca_df.PC2)
-plt.title('My PCA Graph')
-plt.xlabel('PC1 - {0}%'.format(per_var[0]))
-plt.ylabel('PC2 - {0}%'.format(per_var[1]))
 
 
 
