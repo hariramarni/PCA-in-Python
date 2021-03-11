@@ -1,3 +1,5 @@
+# Test code for dataset provided by XlnControl.
+# Irregularities obtained while comparing Factor loadings.
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
