@@ -1,0 +1,60 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.decomposition import PCA
+from sklearn import preprocessing
+dataset = pd.read_csv(r'/Users/hariramarni/Desktop/PCAtest.csv')
+dataset1 = pd.read_csv(r'/Users/hariramarni/Desktop/NAP2.csv')
+print(dataset)
+print(dataset1)
+scaled_data = preprocessing.scale(dataset)
+scaled_data1 = preprocessing.scale(dataset1)
+pca = PCA()
+pca.fit(scaled_data)
+pca.fit(scaled_data1)
+pca_data = pca.transform(scaled_data)
+pca_data1 = pca.transform(scaled_data1)
+per_var = np.round(pca.explained_variance_ratio_* 100, decimals=1)
+per_var1 = np.round(pca.explained_variance_ratio_* 100, decimals=1)
+cov_matrix = np.cov(scaled_data.T)
+print('cov_matrix =',cov_matrix)  
+plt.show()
+cov_matrix1 = np.cov(scaled_data1.T)
+print('cov_matrix1 =',cov_matrix)  
+plt.show()
+values,vector = np.linalg.eig(cov_matrix)
+print('values =', values)
+print('vector =', vector)
+values,vector = np.linalg.eig(cov_matrix1)
+print('values 1 =', values)
+print('vector 1 =', vector)
+labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
+plt.bar(x=range(1,len(per_var)+1), height=per_var, tick_label=labels)
+plt.ylabel('Percentage of Explained Variance')
+plt.xlabel('Principal Component')
+plt.title('Scree Plot 1')
+plt.show()
+labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
+plt.bar(x=range(1,len(per_var1)+1), height=per_var1, tick_label=labels)
+plt.ylabel('Percentage of Explained Variance')
+plt.xlabel('Principal Component')
+plt.title('Scree Plot 2')
+plt.show()
+pca_df = pd.DataFrame(pca_data, columns= labels)
+pca_df1 = pd.DataFrame(pca_data1, columns= labels)
+plt.scatter(pca_df.PC1, pca_df.PC2)
+plt.scatter(pca_df1.PC1, pca_df1.PC2)
+plt.title('My PCA Graph')
+plt.xlabel('PC1 - {0}%'.format(per_var[0]))
+plt.ylabel('PC2 - {0}%'.format(per_var[1]))
+for sample in pca_df.index:
+    plt.annotate(sample, (pca_df.PC1.loc[sample], pca_df.PC2.loc[sample]))
+for sample in pca_df.index:
+    plt.annotate(sample, (pca_df1.PC1.loc[sample], pca_df1.PC2.loc[sample]))
+plt.show()
+#loading_scores = pd.Series(pca.components_[0],index= labels)
+#sorted_loading_scores = loading_scores.abs().sort_values(ascending=False)
+#Malfunction = sorted_loading_scores[0:110].index.values
+#print(loading_scores[Malfunction])
+#print(loading_scores)
+
